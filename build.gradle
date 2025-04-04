@@ -39,7 +39,11 @@ dependencies {
 }
 
 springBoot {
-    mainClass = 'io.paws.github.paws.PawsApplication'
+    mainClass = 'io.paws.paws.PawsApplication'
+}
+
+bootJar{
+    archiveFileName = 'paws.jar'
 }
 
 tasks.named('test') {

@@ -1,9 +1,14 @@
 services:
   postgres:
-    image: 'postgres:latest'
+    image: postgres:13
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+      POSTGRES_USER: belkius
+      POSTGRES_PASSWORD: 159753
+      POSTGRES_DB: paws_db
     ports:
-      - '5432'
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
