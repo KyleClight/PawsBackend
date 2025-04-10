@@ -6,19 +6,15 @@ import lombok.Data;
 
 @Data
 public class SignupRequest {
-    @NotBlank(message = "Имя не может быть пустым")
+    @NotBlank(message = "Имя обязательно")
     private String name;
 
-    @Email(message = "Email должен быть правильного формата")
-    @NotBlank(message = "Email не может быть пустым")
+    @Email(message = "Некорректный email")
+    @NotBlank(message = "Email обязателен")
     private String email;
+
+    @NotBlank(message = "Пароль обязателен")
     private String password;
-
-    public String getName(){ return name; }
-    public void setName(String name){ this.name = name; }
-
-    public String getEmail(){ return email; }
-    public void setEmail(String email){ this.email = email; }
 }
 
 
