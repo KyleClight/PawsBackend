@@ -25,7 +25,7 @@ public class Pets {
     @Id //Первичный ключ в таблице БД
     //Автоматическая генерация поля ID
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String id;
 
     private String name;
     private String type;
