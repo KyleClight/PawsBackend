@@ -2,7 +2,9 @@ package io.paws.paws.service;
 
 import io.paws.paws.entity.User;
 import io.paws.paws.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -20,7 +22,8 @@ public class UserService {
     }
 
     public Optional<User> findByEmail(String email) {
-        return Optional.ofNullable(userRepository.findByEmail(email));
+        return Optional.ofNullable(Optional.ofNullable(userRepository.findByEmail(email))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Loh without an email")));
     }
 
     public User updateUser(User user) {
