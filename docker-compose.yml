@@ -1,0 +1,32 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/paws_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    networks:
+      - paws-network
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: paws_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - paws-db:/var/lib/postgresql/data
+    networks:
+      - paws-network
+
+volumes:
+  paws-db:
+
+networks:
+  paws-network:
