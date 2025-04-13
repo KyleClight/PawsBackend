@@ -16,7 +16,7 @@ hashCode()/equals()
 @Data
 
 @Entity //узнать, что класс является сущностью JPA т.е он будет отображаться в таблице в БД
-@Table(name = "pets")
+@Table(name="pets")
 public class Pets {
     private enum Sex {
         Male, Female
@@ -25,7 +25,7 @@ public class Pets {
     @Id //Первичный ключ в таблице БД
     //Автоматическая генерация поля ID
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     private String name;
     private String type;
