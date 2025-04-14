@@ -16,5 +16,3 @@ This application will be very useful for people who have pets for the convenienc
 Bottom line
 
 This application will be able to help people and has a great chance of success because we care about the comfort of our users and their pets.
-
-Translated with DeepL.com (free version)
