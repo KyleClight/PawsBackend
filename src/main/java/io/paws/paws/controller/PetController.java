@@ -83,4 +83,24 @@ public class PetController {
     public ResponseEntity<?> getAllPets() {
         return ResponseEntity.ok(petsRepository.findAll());
     }
+
+    @PostMapping("/create-new")
+    public ResponseEntity<Pets> createPet(@RequestBody Pets request) {
+        request.setId(null); // На случай если фронт случайно прислал id
+        request.setLastFeed(LocalDateTime.now());
+        request.setLastWalk(LocalDateTime.now());
+        request.setLastMedication(LocalDateTime.now());
+        Pets savedPet = petsRepository.save(request);
+        return ResponseEntity.ok(savedPet);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deletePet(@PathVariable long id) {
+        return petsRepository.findById(id)
+                .map(pet -> {
+                    petsRepository.delete(pet);
+                    return ResponseEntity.ok().build();
+                })
+                .orElse(ResponseEntity.status(404).body("Питомец не найден"));
+    }
 }
