@@ -3,8 +3,7 @@ package io.paws.paws.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /*
 Автоматически создаёт:
@@ -38,12 +37,12 @@ public class Pets {
     private String chipNumber;
     private int age;
 
-    private LocalDate birthDate;
+    private Date birthDate;
     private boolean medication;
     private boolean vaccine;
 
     //Текущее состояние животного
-    private LocalDateTime lastFeed;
-    private LocalDateTime lastWalk;
-    private LocalDateTime lastMedication;
+    private Date lastFeed;
+    private Date lastWalk;
+    private Date lastMedication;
 }
