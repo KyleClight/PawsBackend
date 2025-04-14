@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class SignupRequest {
-    @NotBlank(message = "Имя обязательно")
     private String name;
 
     @Email(message = "Некорректный email")
