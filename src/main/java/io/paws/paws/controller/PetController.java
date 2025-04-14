@@ -77,4 +77,10 @@ public class PetController {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(404).build());
     }
+
+    // Эндпоинт для получения питомца по id
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllPets() {
+        return ResponseEntity.ok(petsRepository.findAll());
+    }
 }
