@@ -1,9 +1,13 @@
 package io.paws.paws.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
-
-import java.util.Date;
 
 /*
 Автоматически создаёт:
@@ -37,12 +41,12 @@ public class Pets {
     private String chipNumber;
     private int age;
 
-    private Date birthDate;
+    private String birthDate;
     private boolean medication;
     private boolean vaccine;
 
     //Текущее состояние животного
-    private Date lastFeed;
-    private Date lastWalk;
-    private Date lastMedication;
+    private String lastFeed;
+    private String lastWalk;
+    private String lastMedication;
 }

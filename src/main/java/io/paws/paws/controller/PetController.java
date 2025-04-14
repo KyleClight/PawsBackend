@@ -28,9 +28,7 @@ public class PetController {
             return ResponseEntity.status(404).body("Питомец не найден");
         }
 
-        LocalDateTime feedTime = Instant.ofEpochSecond(request.getTimestamp())
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
+        String feedTime = Instant.ofEpochSecond(request.getTimestamp()).toString();
 
         pet.setLastFeed(feedTime);  // Обновляем время кормления
         petsRepository.save(pet);
@@ -44,9 +42,7 @@ public class PetController {
             return ResponseEntity.status(404).body("Питомец не найден");
         }
 
-        LocalDateTime walkTime = Instant.ofEpochSecond(request.getTimestamp())
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
+        String walkTime = Instant.ofEpochSecond(request.getTimestamp()).toString();
 
         pet.setLastWalk(walkTime);  // Обновляем время прогулки
         petsRepository.save(pet);
@@ -61,9 +57,7 @@ public class PetController {
             return ResponseEntity.status(404).body("Питомец не найден");
         }
 
-        LocalDateTime medicationTime = Instant.ofEpochSecond(request.getTimestamp())
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
+        String medicationTime = Instant.ofEpochSecond(request.getTimestamp()).toString();
 
         pet.setLastMedication(medicationTime);  // Обновляем время принятия медикаментов
         petsRepository.save(pet);
@@ -87,9 +81,9 @@ public class PetController {
     @PostMapping("/create-new")
     public ResponseEntity<Pets> createPet(@RequestBody Pets request) {
         request.setId(null); // На случай если фронт случайно прислал id
-        request.setLastFeed(LocalDateTime.now());
-        request.setLastWalk(LocalDateTime.now());
-        request.setLastMedication(LocalDateTime.now());
+        request.setLastFeed("");
+        request.setLastWalk("");
+        request.setLastMedication("");
         Pets savedPet = petsRepository.save(request);
         return ResponseEntity.ok(savedPet);
     }
