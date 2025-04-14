@@ -31,6 +31,7 @@ public class Pets {
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
+    private String imageUrl;
     private String name;
     private String type;
     private String breed;
@@ -39,6 +40,7 @@ public class Pets {
 
     private LocalDate birthDate;
     private boolean medication;
+    private boolean vaccine;
 
     //Текущее состояние животного
     private LocalDateTime lastFeed;
