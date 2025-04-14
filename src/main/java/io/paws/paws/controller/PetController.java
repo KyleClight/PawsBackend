@@ -11,13 +11,13 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @RestController
-@RequestMapping("/action")
-public class ActionController {
+@RequestMapping("/pet")
+public class PetController {
 
     final
     PetsRepository petsRepository;
 
-    public ActionController(PetsRepository petsRepository) {
+    public PetController(PetsRepository petsRepository) {
         this.petsRepository = petsRepository;
     }
 
