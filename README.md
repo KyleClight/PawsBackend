@@ -1,3 +1,5 @@
+<img width="337" alt="изображение" src="https://github.com/user-attachments/assets/33f4696d-7d0d-48c0-a2f8-45d2d39d4903" />
+
 ### Idea
 
 Create an app for users who have pets for convenience in everyday life
