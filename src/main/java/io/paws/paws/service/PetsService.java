@@ -35,10 +35,8 @@ public class PetsService {
         existingPet.setChipNumber(updatedPet.getChipNumber());
         existingPet.setImageUrl(updatedPet.getImageUrl());
         existingPet.setBirthDate(updatedPet.getBirthDate());
-        existingPet.setAge(updatedPet.getAge());
         existingPet.setSex(updatedPet.getSex());
         existingPet.setVaccine(updatedPet.getVaccine());
-        existingPet.setMedication(updatedPet.getMedication());
 
         return petRepository.save(existingPet);
     }

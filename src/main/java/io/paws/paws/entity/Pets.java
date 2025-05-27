@@ -41,8 +41,4 @@ public class Pets {
     public boolean getVaccine() {
         return vaccine;
     }
-
-    public boolean getMedication() {
-        return medication;
-    }
 }
