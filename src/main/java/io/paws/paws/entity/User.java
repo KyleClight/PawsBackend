@@ -2,15 +2,15 @@ package io.paws.paws.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.stereotype.Component;
 
 @Data
-
 @Entity
 @Table(name="users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     private String token;
     private int tel;
