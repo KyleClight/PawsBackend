@@ -1,5 +1,6 @@
 package io.paws.paws.service;
 
+import io.paws.paws.DTO.PetCardDTO;
 import io.paws.paws.entity.Pets;
 import io.paws.paws.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,33 @@ public class PetsService {
         existingPet.setBirthDate(updatedPet.getBirthDate());
         existingPet.setSex(updatedPet.getSex());
         existingPet.setVaccine(updatedPet.getVaccine());
-
         return petRepository.save(existingPet);
+    }
+
+
+    private PetCardDTO convertToDTO(Pets pet) {
+        return new PetCardDTO(
+                pet.getId(),
+                pet.getName(),
+                pet.getType(),
+                pet.getBreed(),
+                pet.getChipNumber(),
+                pet.getImageUrl(),
+                pet.getBirthDate(),
+                pet.getSex().name(), //.name() – преобразование enum в String
+                pet.getVaccine(),
+                pet.getMedication(),
+
+                //STATUS
+                pet.getLastFeed(),
+                pet.getLastWalk(),
+                pet.getLastFeed()
+        );
+    }
+
+    public List<PetCardDTO> getAllPetCards() {
+        return petRepository.findAll().stream()          // 1. Получаем всех питомцев и создаем поток (Stream)
+                .map(this::convertToDTO)                     // 2. Каждый объект Pets преобразуем в PetCardDTO
+                .toList();                                   // 3. Собираем результат в список
     }
 }

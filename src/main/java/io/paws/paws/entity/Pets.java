@@ -16,6 +16,10 @@ public class Pets {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
+
+    @Enumerated(EnumType.STRING)
+    private Sex sex;
+
     private String name;
     private String type;
     private String breed;
@@ -23,22 +27,23 @@ public class Pets {
     private String imageUrl;
     private String birthDate;
     private int age;
-
-    @Enumerated(EnumType.STRING)
-    private Sex sex;
-
     private boolean vaccine;
     private boolean medication;
-    //Текущее состояние животного
+
+    //STATUS
     private String lastFeed;
     private String lastWalk;
     private String lastMedication;
 
-    private enum Sex {
+    public enum Sex {
         Male, Female
     }
 
     public boolean getVaccine() {
         return vaccine;
+    }
+
+    public boolean getMedication() {
+        return medication;
     }
 }
