@@ -19,13 +19,10 @@ public class UserService {
     }
 
     public Optional<User> findUserByEmail(String email) {
-        return Optional.ofNullable(userRepository.findByEmail(email))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
+        return userRepository.findByEmail(email);
     }
-
     public User updateUser(String id, User updatedUser) {
-        User existingUser = findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        User existingUser = findById(id);
 
         existingUser.setEmail(updatedUser.getEmail());
         existingUser.setName(updatedUser.getName());
@@ -34,7 +31,8 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
-    private Optional<User> findById(String id) {
-        return userRepository.findById(id);
+    private User findById(String id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     }
 }

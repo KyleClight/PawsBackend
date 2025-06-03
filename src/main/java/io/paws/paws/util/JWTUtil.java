@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -20,7 +21,7 @@ public class JWTUtil {
     public String generateToken(String email) {
         Instant now = Instant.now();
         Date issuedAt = Date.from(now);
-        Date expirationDate = Date.from(now.plus(Duration.ofHours(24)));
+        Date expirationDate = Date.from(now.plus(Duration.ofDays(100)));
 
         return Jwts.builder()
                 .setSubject(email)
@@ -43,16 +44,12 @@ public class JWTUtil {
         }
     }
 
-    public String validateToken(String token) {
+    public boolean validateToken(String token, UserDetails userDetails) {
         try {
-            Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(SECRET_KEY)
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody();
-            return claims.getSubject();
+            String email = extractEmail(token);
+            return (email != null && email.equals(userDetails.getUsername()));
         } catch (Exception invalidToken) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token");
+            return false;
         }
     }
 }

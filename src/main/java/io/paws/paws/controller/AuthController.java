@@ -6,7 +6,9 @@ import io.paws.paws.DTO.SigninResponseDTO;
 import io.paws.paws.DTO.SignupRequestDTO;
 import io.paws.paws.entity.User;
 import io.paws.paws.service.UserService;
+import io.paws.paws.util.JWTUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -23,7 +27,7 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody SignupRequestDTO request) {
+    public ResponseEntity<?> signup(@RequestBody SignupRequestDTO request, JWTUtil jwtUtil, User user) {
         UserService userService = this.userService;
 
 
@@ -31,7 +35,6 @@ public class AuthController {
         if (existingUser.isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already in use");
         }
-        User user = new User();
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
         userService.createUser(user);
@@ -39,11 +42,12 @@ public class AuthController {
         SignupResponseDTO responseDTO = new SignupResponseDTO(
                 user.getEmail()
         );
-        return ResponseEntity.ok(responseDTO);
+        String token = jwtUtil.generateToken(user.getEmail());
+        return ResponseEntity.ok(Map.of("token", token, "user", responseDTO));
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> signin(@RequestBody SigninRequestDTO request) {
+    public ResponseEntity<?> signin(@RequestBody SigninRequestDTO request, JWTUtil jwtUtil, User user) {
         UserService userService = this.userService;
 
         Optional<User> existingUser = userService.findUserByEmail(request.getEmail());
@@ -57,7 +61,8 @@ public class AuthController {
                         userResponse.getTel(),
                         userResponse.getImageUrl()
                 );
-                return ResponseEntity.ok(responseDTO);
+                String token = jwtUtil.generateToken(user.getEmail());
+                return ResponseEntity.ok(Map.of("token", token, "user", responseDTO));
             } else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid password");
 
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid email or password");

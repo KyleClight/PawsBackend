@@ -1,4 +1,4 @@
-package io.paws.paws.controller;
+package io.paws.paws.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
