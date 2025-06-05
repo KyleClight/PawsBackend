@@ -1,24 +1,20 @@
 package io.paws.paws.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.UuidGenerator;
 
 @Data
 @Entity
 @Table(name="pets")
 public class Pets {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @UuidGenerator(style = UuidGenerator.Style.RANDOM)
+    @Column(updatable = false, nullable = false)
     private String id;
 
     @Enumerated(EnumType.STRING)
-    private Sex sex;
+    public Sex sex;
 
     private String name;
     private String type;

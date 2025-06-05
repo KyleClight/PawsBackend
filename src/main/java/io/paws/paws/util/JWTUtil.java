@@ -3,6 +3,7 @@ package io.paws.paws.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +18,11 @@ import java.util.Date;
 public class JWTUtil {
     @Value("${jwt.secret}")
     private String SECRET_KEY;
+
+    @PostConstruct
+    public void init() {
+        System.out.println("JWT-secret: " + SECRET_KEY + "\n--------------------------------------------------------------------------------");
+    }
 
     public String generateToken(String email) {
         Instant now = Instant.now();

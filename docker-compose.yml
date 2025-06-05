@@ -1,19 +1,17 @@
 services:
   app:
+    environment:
+      - JWT_SECRET=ivanbob200613337chicherina99
     build: .
     ports:
       - "8080:8080"
     depends_on:
       - db
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/paws_db
-      SPRING_DATASOURCE_USERNAME: belkius
-      SPRING_DATASOURCE_PASSWORD: 159753
     networks:
       - paws-network
 
   db:
-    image: paws-backend
+    image: postgres:15
     environment:
       POSTGRES_DB: paws_db
       POSTGRES_USER: belkius

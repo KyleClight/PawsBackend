@@ -25,9 +25,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthController {
     private final UserService userService;
+    private final JWTUtil jwtUtil;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody SignupRequestDTO request, JWTUtil jwtUtil, User user) {
+    public ResponseEntity<?> signup(@RequestBody SignupRequestDTO request) {
         UserService userService = this.userService;
 
 
@@ -35,13 +36,12 @@ public class AuthController {
         if (existingUser.isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already in use");
         }
+        User user = new User();
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
         userService.createUser(user);
 
-        SignupResponseDTO responseDTO = new SignupResponseDTO(
-                user.getEmail()
-        );
+        SignupResponseDTO responseDTO = new SignupResponseDTO(user.getEmail());
         String token = jwtUtil.generateToken(user.getEmail());
         return ResponseEntity.ok(Map.of("token", token, "user", responseDTO));
     }
@@ -61,7 +61,7 @@ public class AuthController {
                         userResponse.getTel(),
                         userResponse.getImageUrl()
                 );
-                String token = jwtUtil.generateToken(user.getEmail());
+                String token = jwtUtil.generateToken(existingUser.get().getEmail());
                 return ResponseEntity.ok(Map.of("token", token, "user", responseDTO));
             } else throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid password");
 
